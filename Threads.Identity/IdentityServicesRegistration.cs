@@ -9,8 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Threads.Application.Contracts.Identity;
 using Threads.Application.Models.Identity;
 using Threads.Identity.Models;
+using Threads.Identity.Services;
 
 namespace Threads.Identity
 {
@@ -24,9 +26,18 @@ namespace Threads.Identity
                 options.UseSqlServer(configuration.GetConnectionString("ThreadsIdentityConnectionString"),
                 b => b.MigrationsAssembly(typeof(IdentityDBContext).Assembly.FullName)));
 
-            services.AddIdentity<ApplicationUser, Role>()
+            services.AddIdentity<ApplicationUser, Role>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<IdentityDBContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
 
             services.AddAuthentication(options =>
             {

@@ -20,16 +20,7 @@ namespace Threads.Identity
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>(b =>
-            {
-                b.Property(u => u.Id).HasDefaultValueSql("newsequentialid()");
-            });
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
-
-            builder.Entity<Role>(b =>
-            {
-                b.Property(r => r.Id).HasDefaultValueSql("newsequentialid()");
-            });
             builder.ApplyConfiguration(new RoleConfiguration());
         }
     }

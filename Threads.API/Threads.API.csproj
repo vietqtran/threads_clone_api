@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Threads.Application\Threads.Application.csproj" />
 		<ProjectReference Include="..\Threads.Domain\Threads.Domain.csproj" />
 		<ProjectReference Include="..\Threads.Identity\Threads.Identity.csproj" />
 		<ProjectReference Include="..\Threads.Persistence\Threads.Persistence.csproj" />
