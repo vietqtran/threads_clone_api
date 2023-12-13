@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Threads.Application.Contracts.Identity;
+using Threads.Application.DTOs.User;
+using Threads.Application.Features.User.Requests.Commands;
 using Threads.Application.Models.Identity;
 using Threads.Identity.Services;
 
@@ -9,13 +12,15 @@ namespace Threads.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationUserController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IMediator _mediator;
 
-        public ApplicationUserController (IAuthenticationService authenticationService)
+        public AuthenticationController (IAuthenticationService authenticationService, IMediator mediator)
         {
             _authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
@@ -24,6 +29,27 @@ namespace Threads.API.Controllers
         public async Task<ActionResult> Post (RegistrationRequest registerRequest)
         {
             var result = await _authenticationService.Register(registerRequest);
+
+            if (result != null)
+            {
+                var createUserProfile = await _mediator.Send(new RegisterUserRequestCommand
+                {
+                    RegisterUserDto = new RegisterUserDto
+                    {
+                        UserName = registerRequest.UserName,
+                        Email = registerRequest.Email,
+                        Id = Guid.Parse(result.UserId),
+                        Name = result.UserName
+                    }
+                });
+
+                if (createUserProfile.Id == Guid.Empty)
+                {
+                    await _authenticationService.RevokeIdentityUser(Guid.Parse(result.UserId));
+                    return Ok(createUserProfile);
+                }
+            }
+
             return Ok(result);
         }
 

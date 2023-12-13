@@ -18,11 +18,11 @@ namespace Threads.Identity.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<AuthenticationUser> _userManager;
+        private readonly SignInManager<AuthenticationUser> _signInManager;
         private readonly JwtSettings _jwtSettings;
 
-        public AuthenticationService (UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<ApplicationUser> signInManager)
+        public AuthenticationService (UserManager<AuthenticationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<AuthenticationUser> signInManager)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
@@ -68,7 +68,7 @@ namespace Threads.Identity.Services
             }
             else
             {
-                var createdUser = new ApplicationUser
+                var createdUser = new AuthenticationUser
                 {
                     UserName = request.UserName,
                     Email = request.Email,
@@ -91,7 +91,16 @@ namespace Threads.Identity.Services
             }
         }
 
-        private async Task<JwtSecurityToken> GenerateToken (ApplicationUser user)
+        public async Task RevokeIdentityUser (Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                await _userManager.DeleteAsync(user);
+            }
+        }
+
+        private async Task<JwtSecurityToken> GenerateToken (AuthenticationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);

@@ -20,6 +20,6 @@ namespace Threads.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDBContext).Assembly);
         }
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

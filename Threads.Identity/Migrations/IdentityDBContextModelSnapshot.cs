@@ -125,7 +125,7 @@ namespace Threads.Identity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Threads.Identity.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Threads.Identity.Models.AuthenticationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +152,6 @@ namespace Threads.Identity.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -234,7 +233,7 @@ namespace Threads.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Threads.Identity.Models.ApplicationUser", null)
+                    b.HasOne("Threads.Identity.Models.AuthenticationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -243,7 +242,7 @@ namespace Threads.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Threads.Identity.Models.ApplicationUser", null)
+                    b.HasOne("Threads.Identity.Models.AuthenticationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -258,7 +257,7 @@ namespace Threads.Identity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Threads.Identity.Models.ApplicationUser", null)
+                    b.HasOne("Threads.Identity.Models.AuthenticationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -267,7 +266,7 @@ namespace Threads.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Threads.Identity.Models.ApplicationUser", null)
+                    b.HasOne("Threads.Identity.Models.AuthenticationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

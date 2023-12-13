@@ -26,7 +26,7 @@ namespace Threads.Identity
                 options.UseSqlServer(configuration.GetConnectionString("ThreadsIdentityConnectionString"),
                 b => b.MigrationsAssembly(typeof(IdentityDBContext).Assembly.FullName)));
 
-            services.AddIdentity<ApplicationUser, Role>(options =>
+            services.AddIdentity<AuthenticationUser, Role>(options =>
             {
                 options.Password.RequiredLength = 5;
                 options.Password.RequireDigit = false;

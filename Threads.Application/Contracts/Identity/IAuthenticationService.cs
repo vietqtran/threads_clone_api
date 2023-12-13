@@ -11,5 +11,6 @@ namespace Threads.Application.Contracts.Identity
     {
         Task<RegistrationResponse> Register (RegistrationRequest request);
         Task<AuthenticationResponse> Login (AuthenticationRequest request);
+        Task RevokeIdentityUser (Guid id);
     }
 }

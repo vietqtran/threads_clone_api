@@ -9,9 +9,9 @@ using Threads.Identity.Models;
 
 namespace Threads.Identity.Configurations
 {
-    public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
+    public class ApplicationUserConfiguration : IEntityTypeConfiguration<AuthenticationUser>
     {
-        public void Configure (EntityTypeBuilder<ApplicationUser> builder)
+        public void Configure (EntityTypeBuilder<AuthenticationUser> builder)
         {
             builder.ToTable("Users");
         }

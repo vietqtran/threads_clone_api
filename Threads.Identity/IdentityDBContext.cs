@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Threads.Domain.Entities;
 using Threads.Identity.Configurations;
 using Threads.Identity.Models;
 
 namespace Threads.Identity
 {
-    public class IdentityDBContext : IdentityDbContext<ApplicationUser, Role, Guid>
+    public class IdentityDBContext : IdentityDbContext<AuthenticationUser, Role, Guid>
     {
         public IdentityDBContext (DbContextOptions<IdentityDBContext> options) : base(options)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Threads.Identity.Models
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public class AuthenticationUser : IdentityUser<Guid>
     {
         public string Name { get; set; }
     }
