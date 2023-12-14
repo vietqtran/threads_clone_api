@@ -13,12 +13,38 @@ namespace Threads.Persistence.Configurations.Entities
     {
         public void Configure (EntityTypeBuilder<Post> builder)
         {
-            builder.ToTable("_Posts");
+            builder.ToTable("Posts");
 
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.Title)
+            builder.HasIndex(p => p.UserId);
+
+            builder.Property(p => p.CreatedAt)
+                .HasDefaultValueSql("GETUTCDATE()")
                 .IsRequired();
+
+            builder.Property(p => p.UpdatedAt)
+                .HasDefaultValueSql("GETUTCDATE()")
+                .IsRequired();
+
+            builder.Property(x => x.UserId)
+            .IsRequired();
+
+            builder.Property(x => x.Content)
+                .IsRequired(false);
+
+            builder.Property(x => x.ReplyAudience)
+                .IsRequired()
+                .HasConversion<int>();
+
+            builder.Property(x => x.ThreadType)
+                .IsRequired()
+                .HasConversion<int>();
+
+            builder.HasOne(x => x.User)
+                .WithMany(x => x.Posts)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

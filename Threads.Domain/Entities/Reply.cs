@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,16 +9,18 @@ using Threads.Domain.Relations;
 
 namespace Threads.Domain.Entities
 {
-    public class Post : BaseEntity
+    public class Reply : BaseEntity
     {
         public string Content { get; set; }
         public Guid UserId { get; set; }
-        public ThreadType ThreadType { get; set; } = ThreadType.Post;
+        public Guid RepostId { get; set; }
+        public Guid? PostId { get; set; }
+        public ThreadType ThreadType { get; set; } = ThreadType.Reply;
         public ReplyAudience ReplyAudience { get; set; }
 
         public virtual User User { get; set; }
-        public virtual ICollection<RepostPost> RepostPosts { get; set; }
-        public virtual ICollection<Reply> Replies { get; set; }
+        public virtual Post Post { get; set; }
+        public virtual ICollection<RepostReply> RepostReplies { get; set; }
         public virtual ICollection<Quote> Quotes { get; set; }
         public virtual ICollection<Poll> Polls { get; set; }
         public virtual ICollection<Like> Likes { get; set; }

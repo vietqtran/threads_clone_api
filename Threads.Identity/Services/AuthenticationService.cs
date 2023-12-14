@@ -34,7 +34,7 @@ namespace Threads.Identity.Services
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
-                throw new EmailNotFoundException(request.Email);
+                throw new EmailNotFoundException();
             }
 
             var loginResult = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
@@ -58,7 +58,7 @@ namespace Threads.Identity.Services
             var existingUser = await _userManager.FindByNameAsync(request.UserName);
             if (existingUser != null)
             {
-                throw new SomethingWentWrongException();
+                throw new UserNameAlreadyExistsException();
             }
 
             var user = await _userManager.FindByEmailAsync(request.Email);
@@ -78,7 +78,7 @@ namespace Threads.Identity.Services
                 var result = await _userManager.CreateAsync(createdUser, request.Password);
                 if (!result.Succeeded)
                 {
-                    throw new SomethingWentWrongException();
+                    throw new UserNameAlreadyExistsException();
                 }
 
                 return new RegistrationResponse

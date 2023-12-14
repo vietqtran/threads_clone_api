@@ -46,7 +46,7 @@ namespace Threads.API.Controllers
                 if (createUserProfile.Id == Guid.Empty)
                 {
                     await _authenticationService.RevokeIdentityUser(Guid.Parse(result.UserId));
-                    return Ok(createUserProfile);
+                    return BadRequest(createUserProfile.Errors);
                 }
             }
 

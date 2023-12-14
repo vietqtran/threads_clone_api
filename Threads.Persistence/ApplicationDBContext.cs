@@ -21,5 +21,7 @@ namespace Threads.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
     }
 }
