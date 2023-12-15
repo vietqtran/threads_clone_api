@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace Threads.Domain.Enums
 {
-    public enum NotificationType
+    public enum MediaType
     {
-        FOLLOWS = 1,
-        REPLIES = 2,
-        MENTIONS = 3,
-        QUOTES = 4,
-        REPOSTS = 5,
-        VERIFIED = 6,
+        IMAGE = 1,
+        VIDEO = 2,
     }
 }

@@ -8,15 +8,18 @@ using Threads.Domain.Entities;
 
 namespace Threads.Persistence.Configurations.Entities
 {
-    public class QuoteConfiguration : IEntityTypeConfiguration<Quote>
+    public class PollConfiguration : IEntityTypeConfiguration<Poll>
     {
-        public void Configure (Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Quote> builder)
+        public void Configure (Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Poll> builder)
         {
-            builder.ToTable("Quotes");
+            builder.ToTable("Polls");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Content)
+            builder.Property(x => x.Question)
+                .IsRequired(true);
+
+            builder.Property(x => x.QuoteId)
                 .IsRequired(false);
 
             builder.Property(x => x.PostId)
@@ -33,17 +36,21 @@ namespace Threads.Persistence.Configurations.Entities
                 .HasDefaultValueSql("GETUTCDATE()")
                 .IsRequired();
 
+            builder.HasOne(x => x.Quote)
+                .WithMany(x => x.Polls)
+                .HasForeignKey(x => x.QuoteId);
+
             builder.HasOne(x => x.Post)
-                .WithMany(x => x.Quotes)
+                .WithMany(x => x.Polls)
                 .HasForeignKey(x => x.PostId);
 
             builder.HasOne(x => x.Reply)
-                .WithMany(x => x.Quotes)
+                .WithMany(x => x.Polls)
                 .HasForeignKey(x => x.ReplyId);
 
-            builder.HasMany(x => x.Polls)
-                .WithOne(x => x.Quote)
-                .HasForeignKey(x => x.QuoteId);
+            builder.HasMany(x => x.PollOptions)
+                .WithOne(x => x.Poll)
+                .HasForeignKey(x => x.PollId);
         }
     }
 }

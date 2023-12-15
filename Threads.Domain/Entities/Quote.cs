@@ -16,5 +16,6 @@ namespace Threads.Domain.Entities
 
         public virtual Post Post { get; set; }
         public virtual Reply Reply { get; set; }
+        public virtual ICollection<Poll> Polls { get; set; }
     }
 }

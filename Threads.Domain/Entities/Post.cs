@@ -15,7 +15,7 @@ namespace Threads.Domain.Entities
     {
         public string Content { get; set; }
         public Guid UserId { get; set; }
-        public ThreadType ThreadType { get; set; } = ThreadType.Post;
+        public ThreadType ThreadType { get; set; }
         public ReplyAudience ReplyAudience { get; set; }
 
         public virtual User User { get; set; }

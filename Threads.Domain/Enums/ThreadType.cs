@@ -8,7 +8,7 @@ namespace Threads.Domain.Enums
 {
     public enum ThreadType
     {
-        Post = 1,
-        Reply = 2,
+        POST = 1,
+        REPLY = 2,
     }
 }

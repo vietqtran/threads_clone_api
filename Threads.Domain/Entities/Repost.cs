@@ -11,10 +11,9 @@ namespace Threads.Domain.Entities
     public class Repost : BaseEntity
     {
         public Guid UserId { get; set; }
-        public bool IsHide { get; set; }
+        public bool? IsHide { get; set; }
 
         public virtual User User { get; set; }
-        public virtual Reply Reply { get; set; }
         public virtual ICollection<RepostPost> RepostPosts { get; set; }
         public virtual ICollection<RepostReply> RepostReplies { get; set; }
     }

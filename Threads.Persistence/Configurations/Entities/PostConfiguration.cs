@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Threads.Domain.Entities;
+using Threads.Domain.Enums;
 
 namespace Threads.Persistence.Configurations.Entities
 {
@@ -34,17 +35,40 @@ namespace Threads.Persistence.Configurations.Entities
                 .IsRequired(false);
 
             builder.Property(x => x.ReplyAudience)
-                .IsRequired()
+                .HasDefaultValue(ReplyAudience.ANYONE)
                 .HasConversion<int>();
 
             builder.Property(x => x.ThreadType)
-                .IsRequired()
+                .HasDefaultValue(ThreadType.POST)
                 .HasConversion<int>();
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.Posts)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(x => x.UserId);
+
+            builder.HasMany(x => x.Replies)
+                .WithOne(x => x.Post)
+                .HasForeignKey(x => x.PostId);
+
+            builder.HasMany(x => x.Quotes)
+                .WithOne(x => x.Post)
+                .HasForeignKey(x => x.PostId);
+
+            builder.HasMany(x => x.Polls)
+                .WithOne(x => x.Post)
+                .HasForeignKey(x => x.PostId);
+
+            builder.HasMany(x => x.Medias)
+                .WithOne(x => x.Post)
+                .HasForeignKey(x => x.PostId);
+
+            builder.HasMany(x => x.RepostPosts)
+                .WithOne(x => x.Post)
+                .HasForeignKey(x => x.PostId);
+
+            builder.HasMany(x => x.Likes)
+                .WithOne(x => x.Post)
+                .HasForeignKey(x => x.PostId);
         }
     }
 }

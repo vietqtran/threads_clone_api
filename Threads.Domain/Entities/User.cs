@@ -33,5 +33,6 @@ namespace Threads.Domain.Entities
         public virtual ICollection<Search> Searches { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual RefreshToken RefreshToken { get; set; }
+        public virtual ICollection<Like> Likes { get; set; }
     }
 }
